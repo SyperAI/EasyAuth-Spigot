@@ -5,7 +5,10 @@ import com.google.gson.GsonBuilder;
 import ua.starman.easylogin.utils.LocalDateTimeAdapter;
 import ua.starman.easylogin.utils.Vars;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -26,17 +29,6 @@ public class PlayerData {
         this.password = password;
         this.ip = ip;
         this.lastLogin = lastLogin;
-    }
-
-    public boolean save() {
-        assert uuid != null;
-        File playerSaveFile = new File(Vars.dataDir, uuid + ".json");
-        try (FileWriter writer = new FileWriter(playerSaveFile)) {
-            gson.toJson(this, writer);
-            return true;
-        } catch (IOException e) {
-            return false;
-        }
     }
 
     public static boolean check(UUID playerUUID) {
@@ -61,6 +53,16 @@ public class PlayerData {
             return gson.fromJson(reader, PlayerData.class);
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public void save() {
+        assert uuid != null;
+        File playerSaveFile = new File(Vars.dataDir, uuid + ".json");
+        try (FileWriter writer = new FileWriter(playerSaveFile)) {
+            gson.toJson(this, writer);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

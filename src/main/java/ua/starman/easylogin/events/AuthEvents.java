@@ -1,6 +1,5 @@
 package ua.starman.easylogin.events;
 
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -16,11 +15,14 @@ import ua.starman.easylogin.limits.IpLimit;
 import ua.starman.easylogin.limits.TimeLimit;
 import ua.starman.easylogin.utils.Utils;
 import ua.starman.easylogin.utils.Vars;
+import ua.starman.easylogin.utils.translator.Translation;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 
 public class AuthEvents implements Listener {
+    private final Translation translation = new Translation("events.auth");
+
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
@@ -32,18 +34,18 @@ public class AuthEvents implements Listener {
                 Vars.plugin.getLogger().info(String.format("Player %s was blocked", player.getName()));
                 player.setMetadata("auth_block", new FixedMetadataValue(Vars.plugin, true));
 
-                player.sendMessage(Utils.parseMessage(ChatColor.RED + "You joined from different IP address. Use /login <password>"));
+                player.sendMessage(Utils.parseMessage(translation.getString("different_ip_join")));
             } else if (TimeLimit.working && Duration.between(playerData.lastLogin, LocalDateTime.now()).toMinutes() >= TimeLimit.time) {
                 Vars.plugin.getLogger().info(String.format("Player %s was blocked", player.getName()));
                 player.setMetadata("auth_block", new FixedMetadataValue(Vars.plugin, true));
 
-                player.sendMessage(Utils.parseMessage(ChatColor.RED + "Use /login <password>"));
+                player.sendMessage(Utils.parseMessage(translation.getString("not_authed")));
             }
         } else {
             player.setMetadata("auth_block", new FixedMetadataValue(Vars.plugin, true));
             player.setMetadata("auth_register", new FixedMetadataValue(Vars.plugin, true));
 
-            player.sendMessage(Utils.parseMessage(ChatColor.RED + "Hello! Before joining to our server you need to register! Use /register <password> <password>"));
+            player.sendMessage(Utils.parseMessage(translation.getString("new_player")));
         }
     }
 

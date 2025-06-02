@@ -1,9 +1,7 @@
 package ua.starman.easylogin.utils;
 
-import org.bukkit.ChatColor;
 import org.bukkit.plugin.Plugin;
 import ua.starman.easylogin.EasyAuth;
-import ua.starman.easylogin.limits.TimeLimit;
 
 import java.io.File;
 import java.util.Objects;

@@ -1,5 +1,7 @@
 package ua.starman.easylogin.utils;
 
+import org.bukkit.ChatColor;
+
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -10,13 +12,12 @@ public class Utils {
     public static void checkDirs(File path) {
         if (!path.exists()) {
             if (path.mkdirs()) {
-                return;
             }
         }
     }
 
     public static String parseMessage(String text) {
-        return Vars.pluginTab + " " + text;
+        return Vars.pluginTab + ChatColor.RESET + " " + text;
     }
 
     public static String encodeToSHA256(String originalString) {
