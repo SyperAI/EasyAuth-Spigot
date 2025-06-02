@@ -4,6 +4,11 @@ plugin:
   working: true
   # Name that will be displayed near plugin messages
   tab: "§4[EasyAuth]"
+  # The language in which the plugin will send messages to players. By default, English (en) and Russian (ru) is present.
+  # To create your own translation, create a new .yml file in the translations folder, and then copy the values from en.yml there and translate them.
+  # Then replace the value of this parameter in the name of the translation file that you created.
+  # In the absence of any translations, you will see a message in the console when starting the server.
+  language: "en"
 
 # How and where player data will be stored
 data:

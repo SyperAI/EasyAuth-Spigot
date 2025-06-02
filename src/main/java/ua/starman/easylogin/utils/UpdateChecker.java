@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.function.Consumer;
 
@@ -33,9 +34,28 @@ public class UpdateChecker {
         });
     }
 
+    private boolean checkTextVersionUpToDate(String version) {
+        String[] serverVersionStr = Arrays.stream(version.split("\\D+")).filter(s -> !s.isEmpty()).toArray(String[]::new);
+        String[] currentVersionStr = Arrays.stream(plugin.getDescription().getVersion().split("\\D+")).filter(s -> !s.isEmpty()).toArray(String[]::new);
+
+        int serverMajor = Integer.parseInt(serverVersionStr[0]);
+        int serverMinor = Integer.parseInt(serverVersionStr[1]);
+        int serverPatch = Integer.parseInt(serverVersionStr[2]);
+
+        int currentMajor = Integer.parseInt(currentVersionStr[0]);
+        int currentMinor = Integer.parseInt(currentVersionStr[1]);
+        int currentPatch = Integer.parseInt(currentVersionStr[2]);
+
+        if (serverMajor <= currentMajor) {
+            return true;
+        } else if (serverMinor <= currentMinor) {
+            return true;
+        } else return serverPatch <= currentPatch;
+    }
+
     public void checkUpdate() {
         this.getVersion(version -> {
-            if (this.plugin.getDescription().getVersion().equals(version)) {
+            if (this.plugin.getDescription().getVersion().equals(version) || this.checkTextVersionUpToDate(version)) {
                 this.plugin.getLogger().info("Plugin is up to date!");
             } else {
                 this.plugin.getLogger().info("There is a new update available " +

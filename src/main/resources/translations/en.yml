@@ -1,0 +1,23 @@
+commands:
+  auth:
+    not_registered: "This player is not registered"
+    player_info:
+      last_join: "Last joined: "
+      last_ip: "Last IP: "
+      nickname: "Nickname: "
+  login:
+    already_authed: "§aYou are already authed!"
+    not_registered: "§cYou need to register first! Use /register <password> <password>"
+    welcome: "§aWelcome to the game!"
+    wrong_password: "§cWrong password!"
+  register:
+    already_registered: "§aYou are already registered!"
+    register_success: "§aWelcome to the game!"
+    not_same_passwords: "§cPasswords must be same!"
+    password_not_confirmed: "§cYou need to confirm password!"
+events:
+  auth:
+    different_ip_join: "§cWe noticed that you joined from new IP. Use /login <password> to log in."
+    not_authed: "§cUse /login <password>"
+    not_registered: "§cUse /register <password> <password>"
+    new_player: "§cBefore joining to this server you need to register! Use /register <password> <password>"
